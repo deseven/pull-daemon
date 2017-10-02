@@ -1,0 +1,22 @@
+#!/bin/bash
+
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin
+
+cd /srv/repo1
+prev=$(git rev-list HEAD -n 1)
+git pull -q
+new=$(git rev-list HEAD -n 1)
+if [ "$prev" != "$new" ]; then
+	npm prune
+	npm install
+	pm2 restart all
+fi
+
+cd /srv/repo2
+prev=$(git rev-list HEAD -n 1)
+git pull -q
+new=$(git rev-list HEAD -n 1)
+if [ "$prev" != "$new" ]; then
+	./deploy
+fi
+

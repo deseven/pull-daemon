@@ -1,0 +1,12 @@
+[Unit]
+Description=pull daemon
+After=network.target
+
+[Service]
+Type=simple
+User=root
+ExecStart=/srv/pull-daemon/pd 8888 /srv/pull-daemon/update-repos
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target
