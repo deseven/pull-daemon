@@ -2,6 +2,8 @@
 
 PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin
 
+[[ $(lsof -c $0 -t| wc -l) > 1 ]] && exit 1
+
 cd /srv/repo1
 prev=$(git rev-list HEAD -n 1)
 git pull -q

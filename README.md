@@ -4,5 +4,5 @@
 ### compiling
 `rustc pd.rs && strip pd`
 
-## running
+### running
 `pd $port $command`
