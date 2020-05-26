@@ -1,0 +1,13 @@
+#!/bin/bash
+
+### DON'T FORGET TO SET EXECUTABLE BIT !!!
+
+cd /srv/repo1
+prev=$(git rev-list HEAD -n 1)
+git pull -q
+new=$(git rev-list HEAD -n 1)
+if [ "$prev" != "$new" ]; then
+	npm prune
+	npm install
+	pm2 restart all
+fi
