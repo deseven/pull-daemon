@@ -9,10 +9,10 @@ echo "installing pull-daemon to /srv/pull-daemon, please wait"
 if [ "$ver" == "7" ] || [ "$ver" == "8" ]; then
 	systemctl stop pull-daemon >/dev/null 2>&1
 	mkdir -p /srv/pull-daemon/update-repos.d
-	curl -s -o /srv/pull-daemon/pd "http://home-nadym.ru/pd/pd" || exit 2
-	curl -s -o /etc/systemd/system/pull-daemon.service "http://home-nadym.ru/pd/systemd/pull-daemon.service" || exit 3
-	curl -s -o /srv/pull-daemon/update-repos "http://home-nadym.ru/pd/update-repos" || exit 4
-	curl -s -o /srv/pull-daemon/update-repos.d/repo1.example "http://home-nadym.ru/pd/update-repos.d/repo1.example" || exit 5
+	curl -sL -o /srv/pull-daemon/pd "http://home-nadym.ru/pd/pd" || exit 2
+	curl -sL -o /etc/systemd/system/pull-daemon.service "http://home-nadym.ru/pd/systemd/pull-daemon.service" || exit 3
+	curl -sL -o /srv/pull-daemon/update-repos "http://home-nadym.ru/pd/update-repos" || exit 4
+	curl -sL -o /srv/pull-daemon/update-repos.d/repo1.example "http://home-nadym.ru/pd/update-repos.d/repo1.example" || exit 5
 	chmod +x /srv/pull-daemon/pd
 	chmod +x /srv/pull-daemon/update-repos
 	systemctl daemon-reload
