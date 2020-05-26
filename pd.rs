@@ -2,7 +2,7 @@ use std::net::{TcpStream, TcpListener};
 use std::io::{Read, Write};
 use std::thread;
 use std::env;
-use std::process::Command;
+use std::process::{Command,Stdio};
 
 fn handle_read(mut stream: &TcpStream) -> String {
     let mut buf = [0u8 ;4096];
@@ -29,12 +29,12 @@ fn handle_client(stream: TcpStream) {
     let args: Vec<String> = env::args().collect();
     let action = &args[2];
     let request = handle_read(&stream);
-    if request.starts_with("get /pull") == true {
+    if request.starts_with("get /pull") == true || request.starts_with("post /pull") == true {
+        println!("Executing `{}`",action);
         handle_write(stream,b"HTTP/1.1 200 OK\r\nContent-Type: application/json; charset=UTF-8\r\n\r\n{res:\"ok\"}\r\n");
-        match Command::new("/bin/sh").args(&["-c",action]).spawn() {
-            Ok(_) => println!("Action executed!"),
-            Err(e) => println!("Action error: {}",e)
-        }
+        let proc = Command::new("/bin/sh").args(&["-c",action]).stdin(Stdio::null()).spawn().expect("failed to run command");
+        let output = proc.wait_with_output().expect("failed to wait on command");
+        assert!(output.status.success());
     } else {
         handle_write(stream,b"HTTP/1.1 403 Forbidden\r\nContent-Type: application/json; charset=UTF-8\r\n\r\n{res:\"failed\"}\r\n");
     }
