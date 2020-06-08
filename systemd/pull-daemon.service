@@ -4,8 +4,8 @@ After=network.target
 
 [Service]
 Type=simple
-User=root
-ExecStart=/srv/pull-daemon/pd 8888 /srv/pull-daemon/update-repos
+User=pd
+ExecStart=/opt/pull-daemon/pd 8888 /opt/pull-daemon/update-repos
 Restart=on-abort
 
 [Install]
