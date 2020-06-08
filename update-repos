@@ -2,7 +2,7 @@
 
 PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin
 
-LOCKFILE="/var/lock/`basename $0`"
+LOCKFILE="/tmp/`basename $0`"
 LOCKFD=99
 
 # PRIVATE

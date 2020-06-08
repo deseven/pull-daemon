@@ -24,7 +24,7 @@ if [ "$ver" == "7" ] || [ "$ver" == "8" ]; then
 	read -p "add rule to firewalld (y/n): " -n 1 firewall
 	echo
 	if [ "$firewall" == "y" ]; then
-		firewall-cmd --zone=public --add-port=8888/tcp --permanent
+		firewall-cmd --add-port=8888/tcp --permanent
 		firewall-cmd --reload
 	fi
 else
